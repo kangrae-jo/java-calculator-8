@@ -1,25 +1,34 @@
 package calculator;
 
+import java.util.regex.Pattern;
+
 public class Expression {
 
+    private final CustomSeparator customSeparator;
     private final String expression;
 
     public Expression(String input) {
-        validateRegex(input);
-        this.expression = input;
+        this.customSeparator = new CustomSeparator(input);
+        this.expression = validateNumbers(input);
     }
 
-    private void validateRegex(String input) {
-        // 헤더가 없는 경우
-        if (input.isEmpty() || input.charAt(0) != '/') {
-            return;
+    private String validateNumbers(String input) {
+        String defaultSeparator = ",:";
+        String separator = defaultSeparator;
+
+        if (customSeparator.hasSeparator()) {
+            separator += customSeparator.getSeparator();
+            input = input.substring(5);
         }
 
-        // 헤더가 있는 경우
-        String headerPattern = "^//(\\D)\\\\n.*$"; // "//;\n1,2,3"
-        if (!input.matches(headerPattern)) {
-            throw new IllegalArgumentException("[ERROR] 잘못된 커스텀 구분자 등록 형식입니다. 어플리케이션을 종료합니다.");
+        String numberPattern = "^([0-9]+(?:[" + Pattern.quote(separator) + "][0-9]+)*)?$";
+        System.out.println(numberPattern);
+
+        if (!input.matches(numberPattern)) {
+            throw new IllegalArgumentException("[ERROR] 잘못된 숫자 입력 형식입니다.");
         }
+
+        return input;
     }
 
 }
