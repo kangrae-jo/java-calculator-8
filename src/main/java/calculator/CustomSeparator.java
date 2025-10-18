@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 public class CustomSeparator {
 
     public static final int CUSTOM_SEPARATOR_END = 5;
+    private static final String HEADER_PATTERN = "^//(\\D)\\\\n.*$";
+
     private final Character separator;
 
     public CustomSeparator(String input) {
@@ -27,8 +29,7 @@ public class CustomSeparator {
         }
 
         // 헤더가 있는 경우
-        String headerPattern = "^//(\\D)\\\\n.*$";
-        Pattern pattern = Pattern.compile(headerPattern);
+        Pattern pattern = Pattern.compile(HEADER_PATTERN);
         Matcher matcher = pattern.matcher(input);
         if (!matcher.matches()) {
             throw new IllegalArgumentException("[ERROR] 잘못된 커스텀 구분자 등록 형식입니다. 어플리케이션을 종료합니다.");

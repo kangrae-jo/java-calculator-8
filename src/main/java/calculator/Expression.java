@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 public class Expression {
 
     private final static String DEFAULT_SEPARATOR = ",:";
+
     private final CustomSeparator customSeparator;
     private final String expression;
 
