@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 public class CustomSeparator {
 
+    public static final int CUSTOM_SEPARATOR_END = 5;
     private final Character separator;
 
     public CustomSeparator(String input) {

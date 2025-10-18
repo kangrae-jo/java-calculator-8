@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 
 public class Expression {
 
+    private final static String DEFAULT_SEPARATOR = ",:";
     private final CustomSeparator customSeparator;
     private final String expression;
 
@@ -13,16 +14,15 @@ public class Expression {
     }
 
     public Integer makeSum() {
-        String defaultSeparator = ",:";
-        String separator = defaultSeparator;
+        String separator = DEFAULT_SEPARATOR;
         if (customSeparator.hasSeparator()) {
             separator += customSeparator.getSeparator();
         }
 
-        String splitRegex = "[" + Pattern.quote(separator) + "]";
+        String numberRegex = "[" + Pattern.quote(separator) + "]";
 
         int sum = 0;
-        for (String number : expression.split(splitRegex)) {
+        for (String number : expression.split(numberRegex)) {
             if (!number.isEmpty()) {
                 sum += Integer.parseInt(number);
             }
@@ -32,12 +32,10 @@ public class Expression {
     }
 
     private String validateNumbers(String input) {
-        String defaultSeparator = ",:";
-        String separator = defaultSeparator;
-
+        String separator = DEFAULT_SEPARATOR;
         if (customSeparator.hasSeparator()) {
             separator += customSeparator.getSeparator();
-            input = input.substring(5);
+            input = input.substring(CustomSeparator.CUSTOM_SEPARATOR_END);
         }
 
         String numberPattern = "^([0-9]+(?:[" + Pattern.quote(separator) + "][0-9]+)*)?$";
