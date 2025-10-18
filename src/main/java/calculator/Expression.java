@@ -1,5 +1,6 @@
 package calculator;
 
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 public class Expression {
@@ -20,15 +21,10 @@ public class Expression {
         }
 
         String numberRegex = "[" + Pattern.quote(separator) + "]";
-
-        int sum = 0;
-        for (String number : expression.split(numberRegex)) {
-            if (!number.isEmpty()) {
-                sum += Integer.parseInt(number);
-            }
-        }
-
-        return sum;
+        return Arrays.stream(expression.split(numberRegex))
+                .filter(number -> !number.isEmpty())
+                .mapToInt(Integer::parseInt)
+                .sum();
     }
 
     private String validateNumbers(String input) {
