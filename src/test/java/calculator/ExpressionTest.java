@@ -14,7 +14,7 @@ class ExpressionTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"1,,2", "/1,2,3", "2-4-5-6-"})
+    @ValueSource(strings = {"1,,2", "/1,2,3", "2-4-5-6-", "1,2,"})
     void 문자열_검증_헤더가_없이_올바르지않은_경우(String input) {
         assertThatThrownBy(() -> new Expression(input))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -27,7 +27,7 @@ class ExpressionTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"//[//", "/;\n", "//--\\n"})
+    @ValueSource(strings = {"//[//", "/;\n", "//--\\n", "//)\\n1,2,3)"})
     void 문자열_검증_헤더가_있이_올바르지않은_경우(String input) {
         assertThatThrownBy(() -> new Expression(input))
                 .isInstanceOf(IllegalArgumentException.class);
