@@ -1,5 +1,6 @@
 package calculator;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,7 +11,8 @@ class ExpressionTest {
     @ParameterizedTest
     @ValueSource(strings = {"1,2,3", "1:2:3", "100:1"})
     void 문자열_검증_헤더가_없이_올바른_경우(String input) {
-        new Expression(input);
+        assertThatCode(() -> new Expression(input))
+                .doesNotThrowAnyException();
     }
 
     @ParameterizedTest
@@ -23,7 +25,8 @@ class ExpressionTest {
     @ParameterizedTest
     @ValueSource(strings = {"//[\\n", "//-\\n", "//[\\n1,2[3"})
     void 문자열_검증_헤더가_있이_올바른_경우(String input) {
-        new Expression(input);
+        assertThatCode(() -> new Expression(input))
+                .doesNotThrowAnyException();
     }
 
     @ParameterizedTest
